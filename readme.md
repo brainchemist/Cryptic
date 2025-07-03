@@ -30,7 +30,7 @@ python main.py
 python plot.py #After an hour of running the program so you can have enough data to work with
 ```
 
-##🐳 Docker Usage Guide
+## 🐳 Docker Usage Guide
 
 ### 1. Build the Docker image
 ```bash
