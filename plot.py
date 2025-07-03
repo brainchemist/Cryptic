@@ -1,27 +1,30 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def plot_multiple_coins(csv_file="prices.csv", coins=["bitcoin", "ethereum", "solana"]):
-    # Read the CSV file
+def plot_each_coin_in_same_window(csv_file="prices.csv", coins=["bitcoin", "ethereum", "solana"]):
     df = pd.read_csv(csv_file, names=["timestamp", "coin", "price", "change"])
     df["timestamp"] = pd.to_datetime(df["timestamp"])
     df["price"] = df["price"].astype(float)
 
-    plt.figure(figsize=(12, 6))
+    num_coins = len(coins)
+    fig, axs = plt.subplots(num_coins, 1, figsize=(12, 4 * num_coins), sharex=True)
 
-    # Plot each coin
-    for coin in coins:
+    for i, coin in enumerate(coins):
         coin_df = df[df["coin"] == coin]
-        plt.plot(coin_df["timestamp"], coin_df["price"], marker='o', label=coin.capitalize())
 
-    plt.title("Crypto Price History")
+        if coin_df.empty:
+            axs[i].text(0.5, 0.5, f"No data for {coin}", ha='center')
+            continue
+
+        axs[i].plot(coin_df["timestamp"], coin_df["price"], marker='o')
+        axs[i].set_title(f"{coin.capitalize()} Price Over Time")
+        axs[i].set_ylabel("Price (USD)")
+        axs[i].grid(True)
+
     plt.xlabel("Time")
-    plt.ylabel("Price (USD)")
-    plt.legend()
-    plt.grid(True)
     plt.xticks(rotation=45)
     plt.tight_layout()
     plt.show()
 
-# Call the function
-plot_multiple_coins()
+
+plot_each_coin_in_same_window()
