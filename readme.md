@@ -31,22 +31,25 @@ python plot.py #After an hour of running the program so you can have enough data
 ```
 
 ##🐳 Docker Usage Guide
-###1. Build the Docker image
 
+###1. Build the Docker image
+```bash
 docker build -t crypto-tracker .
+```
 
 ###2. Run in the background (24/7)
-
+```bash
 docker run -d \
   --name crypto-tracker \
   --restart always \
   -v $(pwd)/prices.csv:/app/prices.csv \
   --env-file .env \
   crypto-tracker
+```
 
 ###3. View live logs
-
+```bash
 docker logs -f crypto-tracker
-
+```
 
 
