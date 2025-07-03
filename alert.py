@@ -1,11 +1,15 @@
 from twilio.rest import Client
+import os
+from dotenv import load_dotenv
 
 THRESHOLD = 5  # percentage
 
-TWILIO_SID = "your_account_sid"
-TWILIO_AUTH_TOKEN = "your_auth_token"
-TWILIO_FROM = "+12314403719"
-TWILIO_TO = "+14388331822"
+load_dotenv()
+
+TWILIO_SID = os.getenv("TWILIO_SID")
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
+TWILIO_FROM = os.getenv("TWILIO_FROM")
+TWILIO_TO = os.getenv("TWILIO_TO")
 
 client = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
 
