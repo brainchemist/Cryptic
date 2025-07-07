@@ -9,7 +9,7 @@ from datetime import datetime
 
 CRYPTO_COINS = ["bitcoin", "ethereum", "solana"]
 STOCKS = ["FXI", "NVDA", "SOXL", "SPY", "XEQT.TO"]
-CSV_FILE = "../prices.csv"
+CSV_FILE = "prices.csv"
 
 def log_price(name, price, change):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -44,4 +44,5 @@ def main():
         time.sleep(300)
 
 if __name__ == "__main__":
+    print("Main started")
     main()
