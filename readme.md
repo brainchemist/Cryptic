@@ -1,55 +1,131 @@
-# 📈 Crypto Price Tracker
 
-This is a Python-based tool that tracks the price of cryptocurrencies (e.g. Bitcoin, Ethereum, Solana) using the CoinGecko API. It logs prices, sends alerts to Discord and via SMS (Twilio), and optionally runs 24/7 inside a Docker container.
+#  Cryptic - Crypto & Stock Tracker with SMS Alerts
 
----
+Cryptic is a Python-based tracker that monitors the prices of selected cryptocurrencies and stocks. If the price changes exceed a defined threshold or your investments turn profitable, it sends SMS alerts via Twilio.
 
-## 🚀 Features
+##  Features
 
-- Fetches real-time price & % change of selected coins
-- Logs prices to `prices.csv`
-- Alerts when price changes exceed a threshold
-  - ✅ SMS via Twilio
-- Optionally runs 24/7 in a Docker container
-- Price plotting with `matplotlib`
+-  Tracks real-time prices of crypto (via CoinGecko) and stocks (via Yahoo Finance)
+-  Sends SMS alerts if thresholds are exceeded or if you're in profit
+-  Logs all price data into a `prices.csv` file
+-  Fully containerized with Docker support
+-  Auto-restarts using `--restart always` in Docker
+-  Uses `.env` file to securely store sensitive data
 
----
+##  Technologies Used
 
-## 📦 Setup (Local Python)
+- Python 3.10
+- Docker
+- Twilio API
+- CoinGecko API
+- yFinance (Yahoo Finance)
+- Pandas, CSV
+- dotenv
 
-### 1. Clone the repo & set up a virtual environment
+##  Project Structure
+
+```
+Cryptic/
+├── Dockerfile
+├── docker.sh
+├── prices.csv
+├── requirements.txt
+├── readme.md
+├── src/
+│   ├── main.py
+│   ├── alert.py
+│   ├── coingecko.py
+│   └── stocks.py
+└── .env
+```
+
+##  Setup
+
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/crypto-tracker.git
-cd crypto-tracker
+git clone https://github.com/yourusername/Cryptic.git
+cd Cryptic
+```
+
+### 2. Create `.env` File
+
+```env
+# .env
+TWILIO_SID=your_twilio_sid
+TWILIO_AUTH_TOKEN=your_twilio_token
+TWILIO_FROM=your_twilio_phone_number
+TWILIO_TO=your_verified_phone_number
+```
+
+### 3. Build and Run with Docker
+
+```bash
+chmod +x docker.sh
+./docker.sh
+```
+
+This script will:
+- Stop and remove any existing `cryptic` container
+- Rebuild the image
+- Start a new container with:
+  - Logs mounted to `prices.csv`
+  - Twilio credentials loaded from `.env`
+
+##  Assets Tracked
+
+### Crypto (via CoinGecko)
+- Bitcoin
+- Ethereum
+- Solana
+
+### Stocks/ETFs (via Yahoo Finance)
+- FXI
+- NVDA
+- SOXL
+- SPY
+- XEQT (`XEQT.TO` in code)
+
+##  SMS Alerts
+
+You'll receive a message like this:
+```
+🚨 NVDA is UP 5.42%
+Price: $135.21
+Profit: +$13.21 CAD (+10.2%)
+```
+
+### Profit alerts use:
+- Your average book cost per asset
+- Your quantity per asset
+- Threshold defined in `alert.py` (default: 10%) I used 10% because I am looking for a longterm return
+
+##  Development (without Docker)
+
+```bash
 python3 -m venv venv
-src venv/bin/activate
+source venv/bin/activate
 pip install -r requirements.txt
-python main.py
-
-python plot.py #After an hour of running the program so you can have enough data to work with
+python src/main.py
 ```
 
-## 🐳 Docker Usage Guide
+##  Notes
 
-### 1. Build the Docker image
-```bash
-docker build -t crypto-tracker .
-```
+- Set `THRESHOLD` in `alert.py` to control SMS sensitivity
+- `prices.csv` is automatically created and appended every 5 minutes
+- Docker ensures your tracker keeps running with `--restart always`
 
-### 2. Run in the background (24/7)
-```bash
-docker run -d \
-  --name crypto-tracker \
-  --restart always \
-  -v $(pwd)/prices.csv:/app/prices.csv \
-  --env-file .env \
-  crypto-tracker
-```
+## TODO
 
-### 3. View live logs
-```bash
-docker logs -f crypto-tracker
-```
+- [ ] Web dashboard via Streamlit
+- [ ] Email alert option #I don't think I will do this one
+- [ ] Multi-currency support 
 
+##  Author
 
+**Zack (BrainChemist)**  
+[GitHub](https://github.com/brainchemist)
+
+## License
+
+MIT License
