@@ -23,7 +23,7 @@ This is a Python-based tool that tracks the price of cryptocurrencies (e.g. Bitc
 git clone https://github.com/yourusername/crypto-tracker.git
 cd crypto-tracker
 python3 -m venv venv
-source venv/bin/activate
+src venv/bin/activate
 pip install -r requirements.txt
 python main.py
 
