@@ -9,7 +9,7 @@ st.title("📊 Crypto Price Dashboard")
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv("prices.csv", names=["timestamp", "coin", "price", "change"])
+    df = pd.read_csv("../prices.csv", names=["timestamp", "coin", "price", "change"])
     df["timestamp"] = pd.to_datetime(df["timestamp"])
     df["price"] = df["price"].astype(float)
     return df
