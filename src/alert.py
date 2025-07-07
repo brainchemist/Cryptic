@@ -2,7 +2,7 @@ from twilio.rest import Client
 import os
 from dotenv import load_dotenv
 
-THRESHOLD = 0.01  # percentage
+THRESHOLD = 10  # percentage
 
 load_dotenv()
 
