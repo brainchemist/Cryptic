@@ -4,3 +4,4 @@ matplotlib
 twilio
 python-dotenv
 streamlit
+yfinance
