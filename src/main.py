@@ -17,7 +17,6 @@ def log_price(name, price, change):
         writer = csv.writer(f)
         writer.writerow([timestamp, name, price, change])
 
-print("Fetching crypto prices...")
 
 def main():
     print("Starting Crypto & Stock Tracker...")
